@@ -206,6 +206,11 @@ function drawScore(sideScore, side) {
         c.fillRect(scorePosition, scoreCounterHeight/5 + fromTop, scoreCounterWidth - scoreCounterWidth/4, scoreCounterHeight/5)
         c.fillRect(scorePosition, scoreCounterHeight - scoreCounterHeight/2.5 + fromTop, scoreCounterWidth - scoreCounterWidth/4, scoreCounterHeight/5)
     }
+
+    if (sideScore === 4) {
+        c.fillRect(scorePosition + scoreCounterWidth/4, fromTop, scoreCounterWidth/2, scoreCounterHeight/2.5)
+        c.fillRect(scorePosition, scoreCounterHeight - scoreCounterHeight/2.5 + fromTop, scoreCounterWidth - scoreCounterWidth/4, scoreCounterHeight/2.5)
+    }
     
 }
 
