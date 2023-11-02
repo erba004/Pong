@@ -9,12 +9,17 @@ const increaseX = 1
 const increaseY = 0.5
 const behind = 25
 const ballWidth = 30
-const basePositionY = (canvas.height/2) - (ballWidth/2)
-const basePositionX = (canvas.width/2) - (ballWidth/2) 
+const basePositionY = canvas.height/2 - ballWidth/2
+const basePositionX = canvas.width/2 - ballWidth/2
 let baseSpeedX = 4
 let baseSpeedY = 2
 let score1 = 0
 let score2 = 0
+const fromTop = 25
+const scoreCounterWidth = 100
+const scoreCounterHeight = 150
+const scorePositionLeft = canvas.width/3
+const scorePositionRight = canvas.width-(canvas.width/3) - 100
 
 
 c.fillRect(0, 0, canvas.width, canvas.height)
@@ -32,6 +37,7 @@ class Sprite {
     draw() {
         c.fillStyle = this.color
         c.fillRect(this.position.x, this.position.y, this.width, this.height)
+
     }
 
     update() {
@@ -94,7 +100,7 @@ class BallClass {
 const player1 = new Sprite({
     position: {
         x: 150,
-        y: (canvas.height/2) - 75
+        y: canvas.height/2 - 75
     },
     velocity: {
         x: 0,
@@ -108,7 +114,7 @@ const player1 = new Sprite({
 const player2 = new Sprite({
     position: {
         x: canvas.width - 150,
-        y: (canvas.height/2) - 75
+        y: canvas.height/2 - 75
     },
     velocity: {
         x: 0,
@@ -158,6 +164,52 @@ function score(side) {
     }
 }
 
+function drawMiddle() {
+    const middleWidth = 10
+    const splitHeight = canvas.height/20
+    let pos = splitHeight/2
+    c.fillStyle = 'black'
+    c.fillRect(canvas.width/2-middleWidth/2, 0, middleWidth, canvas.height)
+    for (let i=1; i<=10; i++) {
+        c.fillStyle = 'white'
+        c.fillRect(canvas.width/2-middleWidth/2, pos, middleWidth, splitHeight)
+        pos += splitHeight*2 
+
+    }
+}
+
+function drawScore(sideScore, side) {
+    const scorePosition = side
+
+    c.fillStyle = 'white'
+    c.fillRect(scorePosition, fromTop, scoreCounterWidth, scoreCounterHeight)
+    c.fillStyle = 'black'
+
+
+    if (sideScore === 0) {
+        c.fillRect(scorePosition + scoreCounterWidth/4, scoreCounterHeight/5 + fromTop, scoreCounterWidth - scoreCounterWidth/2, scoreCounterHeight - scoreCounterHeight/2.5)
+        c.fillRect(scorePosition + scoreCounterWidth/4, scoreCounterHeight/5 + fromTop, scoreCounterWidth - scoreCounterWidth/2, scoreCounterHeight - scoreCounterHeight/2.5)
+
+    }
+
+    if (sideScore === 1) {
+        c.fillRect(scorePosition, scoreCounterHeight/5 + fromTop, scoreCounterWidth/3, scoreCounterHeight - scoreCounterHeight/5)
+        c.fillRect(scorePosition + scoreCounterWidth - scoreCounterWidth/3, fromTop, scoreCounterWidth/3, scoreCounterHeight)
+    } 
+
+    if (sideScore === 2) {
+        c.fillRect(scorePosition, scoreCounterHeight/5 + fromTop, scoreCounterWidth - scoreCounterWidth/4, scoreCounterHeight/5)
+        c.fillRect(scorePosition + scoreCounterWidth/4, scoreCounterHeight - scoreCounterHeight/2.5 + fromTop, scoreCounterWidth - scoreCounterWidth/4, scoreCounterHeight/5)
+    }
+
+    if (sideScore === 3) {
+        c.fillRect(scorePosition, scoreCounterHeight/5 + fromTop, scoreCounterWidth - scoreCounterWidth/4, scoreCounterHeight/5)
+        c.fillRect(scorePosition, scoreCounterHeight - scoreCounterHeight/2.5 + fromTop, scoreCounterWidth - scoreCounterWidth/4, scoreCounterHeight/5)
+    }
+    
+}
+
+
 function reset() {
     ball.velocity.x = baseSpeedX
     ball.velocity.y = baseSpeedY
@@ -168,6 +220,11 @@ function reset() {
 function hitPlayer(amountX) {
     ball.velocity.x *= -1
     ball.velocity.x += amountX
+    if (ball.velocity.y < 0) {
+        ball.velocity.y -= increaseY
+    } else {
+        ball.velocity.y += increaseY
+    }
 }
 
 //main gameplay loop
@@ -175,9 +232,13 @@ function animate() {
     window.requestAnimationFrame(animate)
     c.fillStyle = 'black'
     c.fillRect(0, 0, canvas.width, canvas.height)
+    drawMiddle()
+    drawScore(score1, scorePositionLeft)
+    drawScore(score2, scorePositionRight)
     player1.update()
     player2.update()
     ball.update()
+
 
     player1.velocity.y = 0
     player2.velocity.y = 0
@@ -205,7 +266,6 @@ function animate() {
         ball.position.x >= player1.position.x
     ) {
         hitPlayer(increaseX)
-
     }
 
     //spiller 1 treff topp
