@@ -11,16 +11,18 @@ const behind = 25
 const ballWidth = 30
 const basePositionY = canvas.height/2 - ballWidth/2
 const basePositionX = canvas.width/2 - ballWidth/2
-let baseSpeedX = 4
-let baseSpeedY = 2
+let baseSpeedX = -4
+let baseSpeedY = -1
 let score1 = 0
 let score2 = 0
 const fromTop = 25
+const gap = 25
 const scoreCounterWidth = 100
 const scoreCounterHeight = 150
-const scorePositionLeft = canvas.width/3
-const scorePositionRight = canvas.width-(canvas.width/3) - 100
-
+const scorePositionLeft = canvas.width/3 + scoreCounterWidth/2
+const scorePositionRight = canvas.width-(canvas.width/3) + gap - scoreCounterWidth/2
+const scorePositionLeft2 = canvas.width/3 - gap - scoreCounterWidth + scoreCounterWidth/2
+const scorePositionRight2 = canvas.width-(canvas.width/3) - scoreCounterWidth - scoreCounterWidth/2
 
 c.fillRect(0, 0, canvas.width, canvas.height)
 
@@ -158,9 +160,9 @@ const keys =  {
 
 function score(side) {
     if (side < canvas.width/2) {
-        score1 += 1
-    } else {
         score2 += 1
+    } else {
+        score1 += 1
     }
 }
 
@@ -178,18 +180,12 @@ function drawMiddle() {
     }
 }
 
-function drawScore(sideScore, side) {
+function drawNumbers(sideScore, side) {
+
     const scorePosition = side
-
-    c.fillStyle = 'white'
-    c.fillRect(scorePosition, fromTop, scoreCounterWidth, scoreCounterHeight)
-    c.fillStyle = 'black'
-
 
     if (sideScore === 0) {
         c.fillRect(scorePosition + scoreCounterWidth/4, scoreCounterHeight/5 + fromTop, scoreCounterWidth - scoreCounterWidth/2, scoreCounterHeight - scoreCounterHeight/2.5)
-        c.fillRect(scorePosition + scoreCounterWidth/4, scoreCounterHeight/5 + fromTop, scoreCounterWidth - scoreCounterWidth/2, scoreCounterHeight - scoreCounterHeight/2.5)
-
     }
 
     if (sideScore === 1) {
@@ -211,7 +207,49 @@ function drawScore(sideScore, side) {
         c.fillRect(scorePosition + scoreCounterWidth/4, fromTop, scoreCounterWidth/2, scoreCounterHeight/2.5)
         c.fillRect(scorePosition, scoreCounterHeight - scoreCounterHeight/2.5 + fromTop, scoreCounterWidth - scoreCounterWidth/4, scoreCounterHeight/2.5)
     }
+
+    if (sideScore === 5) {
+        c.fillRect(scorePosition + scoreCounterWidth/4, scoreCounterHeight/5 + fromTop, scoreCounterWidth - scoreCounterWidth/4, scoreCounterHeight/5)
+        c.fillRect(scorePosition, scoreCounterHeight - scoreCounterHeight/2.5 + fromTop, scoreCounterWidth - scoreCounterWidth/4, scoreCounterHeight/5) 
+    }
     
+    if (sideScore === 6) {
+        c.fillRect(scorePosition + scoreCounterWidth/4, scoreCounterHeight/5 + fromTop, scoreCounterWidth - scoreCounterWidth/4, scoreCounterHeight/5)
+        c.fillRect(scorePosition + scoreCounterWidth/4, scoreCounterHeight - scoreCounterHeight/2.5 + fromTop, scoreCounterWidth/2, scoreCounterHeight/5 )
+    }
+
+    if (sideScore === 7) {
+        c.fillRect(scorePosition, scoreCounterHeight/5 + fromTop, scoreCounterWidth/1.5, scoreCounterHeight - scoreCounterHeight/5)
+    }
+
+    if (sideScore === 8) {
+        c.fillRect(scorePosition + scoreCounterWidth/4, scoreCounterHeight/5 + fromTop, scoreCounterWidth/2, scoreCounterHeight/5 )
+        c.fillRect(scorePosition + scoreCounterWidth/4, scoreCounterHeight - scoreCounterHeight/2.5 + fromTop, scoreCounterWidth/2, scoreCounterHeight/5 )
+    }
+
+    if (sideScore === 9) {
+        c.fillRect(scorePosition + scoreCounterWidth/4, scoreCounterHeight/5 + fromTop, scoreCounterWidth/2, scoreCounterHeight/5 )
+        c.fillRect(scorePosition, scoreCounterHeight - scoreCounterHeight/2.5 + fromTop, scoreCounterWidth/1.5, scoreCounterHeight - scoreCounterHeight/5)
+    }
+
+}
+
+function drawScore(sideScore, side, side2) {
+
+    let scoreTen = parseInt(sideScore/10)
+    let scoreOne = sideScore % 10
+
+    c.fillStyle = 'white'
+    c.fillRect(side, fromTop, scoreCounterWidth, scoreCounterHeight)
+    c.fillRect(side2, fromTop, scoreCounterWidth, scoreCounterHeight)
+    c.fillStyle = 'black'
+    
+    //tegner tieren
+    drawNumbers(scoreTen, side2)
+
+    //tegner eneren
+    drawNumbers(scoreOne, side)
+
 }
 
 
@@ -238,8 +276,8 @@ function animate() {
     c.fillStyle = 'black'
     c.fillRect(0, 0, canvas.width, canvas.height)
     drawMiddle()
-    drawScore(score1, scorePositionLeft)
-    drawScore(score2, scorePositionRight)
+    drawScore(score1, scorePositionLeft, scorePositionLeft2)
+    drawScore(score2, scorePositionRight, scorePositionRight2)
     player1.update()
     player2.update()
     ball.update()
@@ -272,9 +310,6 @@ function animate() {
     ) {
         hitPlayer(increaseX)
     }
-
-    //spiller 1 treff topp
-
 
     //spiller 2 treff
     if (
