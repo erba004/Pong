@@ -2,8 +2,11 @@ document.body.style.margin = '0px'
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
+//setter størrelsen på spillfeltet
 canvas.width = 1440
 canvas.height = 787
+
+//definer mesteparten av variblene som blir brukt i løpet av hele koden
 
 const increaseX = 1
 const increaseY = 0.5
@@ -11,8 +14,6 @@ const behind = 25
 const ballWidth = 30
 const basePositionY = canvas.height/2 - ballWidth/2
 const basePositionX = canvas.width/2 - ballWidth/2
-let baseSpeedX = -4
-let baseSpeedY = -1
 let score1 = 0
 let score2 = 0
 const fromTop = 25
@@ -24,6 +25,27 @@ const scorePositionRight = canvas.width-(canvas.width/3) + gap - scoreCounterWid
 const scorePositionLeft2 = canvas.width/3 - gap - scoreCounterWidth + scoreCounterWidth/2
 const scorePositionRight2 = canvas.width-(canvas.width/3) - scoreCounterWidth - scoreCounterWidth/2
 
+//tilfeldig retning på ballen på start
+let directionX = parseInt(Math.random()*2+1)
+if (directionX === 2) {
+    directionX = 1
+    console.log('if')
+} else {
+    directionX = -1
+    console.log('else')
+}
+let directionY = parseInt(Math.random()*2+1)
+if (directionY === 2) {
+    directionY = 1
+    console.log('if')
+} else {
+    directionY = -1
+    console.log('else')
+}
+let baseSpeedX = 4 * directionX
+let baseSpeedY = parseInt(Math.random()*10 + 1) * directionY
+
+//tegner spillfeltet
 c.fillRect(0, 0, canvas.width, canvas.height)
 
 //creates a class to make it easier to make the players
@@ -36,12 +58,14 @@ class Sprite {
         this.color = color
     }
 
+    //tegner spillerne
     draw() {
         c.fillStyle = this.color
         c.fillRect(this.position.x, this.position.y, this.width, this.height)
 
     }
 
+    //oppdaterer spillerne sin posisjon
     update() {
         this.draw()
         this.position.x += this.velocity.x
@@ -69,12 +93,13 @@ class BallClass {
         this.color = color
     }
 
+    //tegner ballen
     draw() {
         c.fillStyle = this.color
         c.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 
-    //updates and checks for movement every tick
+    //oppdaterer ballen sin posisjon
     update() {
         this.draw()
         this.position.x += this.velocity.x
@@ -98,7 +123,7 @@ class BallClass {
 
 }
 
-//creates player1
+//lager spiller 1
 const player1 = new Sprite({
     position: {
         x: 150,
@@ -112,7 +137,7 @@ const player1 = new Sprite({
 
 })
 
-//creates player2
+//lager spiller 2
 const player2 = new Sprite({
     position: {
         x: canvas.width - 150,
@@ -126,7 +151,7 @@ const player2 = new Sprite({
 
 })
 
-//creates the ball
+//lager ballen
 const ball = new BallClass({
     position: {
         x: basePositionX,
@@ -138,11 +163,7 @@ const ball = new BallClass({
     }
 })
 
-console.log(player1)
-console.log(player2)
-
-//this is to make sure the players dont continue to move 
-//after the buttons are pressed
+// gjør at spillerne stopper å bevege seg når de slipper flytte knappen 
 const keys =  {
     w: {
         pressed: false
@@ -180,6 +201,7 @@ function drawMiddle() {
     }
 }
 
+//tegner tall
 function drawNumbers(sideScore, side) {
 
     const scorePosition = side
@@ -234,9 +256,10 @@ function drawNumbers(sideScore, side) {
 
 }
 
+//tegner riktige tall på riktig posisjon
 function drawScore(sideScore, side, side2) {
 
-    let scoreTen = parseInt(sideScore/10)
+    let scoreTen = parseInt(sideScore/10) % 10
     let scoreOne = sideScore % 10
 
     c.fillStyle = 'white'
@@ -252,14 +275,35 @@ function drawScore(sideScore, side, side2) {
 
 }
 
-
+//setter ballen tilbake til midten
 function reset() {
     ball.velocity.x = baseSpeedX
     ball.velocity.y = baseSpeedY
     ball.position.x = basePositionX
     ball.position.y = basePositionY
+
+    //tilfeldig retning på ballen etter poeng
+    directionX = parseInt(Math.random()*2+1)
+    if (directionX === 2) {
+        directionX = 1
+        console.log('if')
+    } else {
+        directionX = -1
+        console.log('else')
+    }
+    directionY = parseInt(Math.random()*2+1)
+    if (directionY === 2) {
+        directionY = 1
+        console.log('if')
+    } else {
+        directionY = -1
+        console.log('else')
+    }
+    baseSpeedX *= directionX
+    baseSpeedY = parseInt(Math.random()*10 + 1) * directionY
 }
 
+//gjør at ballen spretter og blir raskere hvis den treffer en spiller
 function hitPlayer(amountX) {
     ball.velocity.x *= -1
     ball.velocity.x += amountX
@@ -270,7 +314,7 @@ function hitPlayer(amountX) {
     }
 }
 
-//main gameplay loop
+//hoved loopen
 function animate() {
     window.requestAnimationFrame(animate)
     c.fillStyle = 'black'
@@ -282,18 +326,18 @@ function animate() {
     player2.update()
     ball.update()
 
-
+    //stopper spillerne sånn at de ikke fortsetter å flytte seg når de ikke trykker knappene
     player1.velocity.y = 0
     player2.velocity.y = 0
 
-    //player1 movement
+    //player1 bevegelse
     if (keys.w.pressed && player1.lastkey === 'w') {
         player1.velocity.y = -5
     } else if (keys.s.pressed && player1.lastkey === 's') {
         player1.velocity.y = 5
     }
 
-    //player2 movement
+    //player2 bevegelse
     if (keys.ArrowUp.pressed && player2.lastkey === 'ArrowUp') {
         player2.velocity.y = -5
     } else if (keys.ArrowDown.pressed && player2.lastkey === 'ArrowDown') {
@@ -322,30 +366,27 @@ function animate() {
         console.log(ball)
     }
 
+    //spretter ballen hvis den treffer toppen eller bunnen
     if (
         ball.position.y <= 0 || ball.position.y + ball.height >= canvas.height
     ) {
         ball.velocity.y *= -1
     }
 
+    //gir poeng hvis ballen går ut på en av sidene
     if (
         ball.position.x <= behind || ball.position.x + ball.width >= canvas.width - behind
     ) {
         score(ball.position.x)
-        reset()
-        console.log(score1)
-        console.log(score2)
-        
+        reset()       
     }
 
 }
 
+//kjører hoved loopen
 animate()
 
-console.log(player2)
-console.log(ball)
-
-//player movement
+//gjør at spillerne kan bevege seg
 window.addEventListener(('keydown'), (event) => {
     switch (event.key) {
         case 'w':
@@ -367,7 +408,7 @@ window.addEventListener(('keydown'), (event) => {
     }
 })
 
-//checks when the player is not pressing the movemnt keys anymore
+//sjekker når spillern stopper å trykke bevegelses knappene
 window.addEventListener(('keyup'), (event) => {
     switch (event.key) {
         case 'w':
