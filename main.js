@@ -1,3 +1,4 @@
+//setter margin til 0 og henter spillområdet fra HTML
 document.body.style.margin = '0px'
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
@@ -48,7 +49,7 @@ let baseSpeedY = parseInt(Math.random()*10 + 1) * directionY
 //tegner spillfeltet
 c.fillRect(0, 0, canvas.width, canvas.height)
 
-//creates a class to make it easier to make the players
+//lager en klasse for å gjøre det lettere å lage like spillere
 class Sprite {
     constructor({position, velocity, color = 'white'}) {
         this.position = position
@@ -179,6 +180,7 @@ const keys =  {
     }
 }
 
+//teller stillingen
 function score(side) {
     if (side < canvas.width/2) {
         score2 += 1
@@ -187,6 +189,7 @@ function score(side) {
     }
 }
 
+//tegner midtlinjen
 function drawMiddle() {
     const middleWidth = 10
     const splitHeight = canvas.height/20
