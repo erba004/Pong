@@ -187,7 +187,7 @@ function gameOver(winSide, loseSide) {
 
 
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'your_php_script.php', true);
+    xhr.open('POST', 'bruh.php', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
@@ -195,6 +195,7 @@ function gameOver(winSide, loseSide) {
         }
     };
     xhr.send(JSON.stringify(winSide));
+    xhr.send(JSON.stringify(loseSide))
 
     location.href = "gameover.html"
     
