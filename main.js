@@ -195,7 +195,6 @@ function gameOver(winSide, loseSide) {
         }
     };
     xhr.send(JSON.stringify(winSide));
-    xhr.send(JSON.stringify(loseSide))
 
     location.href = "gameover.html"
     
