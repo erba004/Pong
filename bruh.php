@@ -13,8 +13,6 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    
-
     // Sample data to insert
     $name = "John Doe";
     $leftScore = 19;
