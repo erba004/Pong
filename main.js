@@ -180,12 +180,39 @@ const keys =  {
     }
 }
 
+let leftInner = document.querySelector(".leftscore")
+let rightInner = document.querySelector(".rightscore")
+
+function gameOver(winSide, loseSide) {
+
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'your_php_script.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText); // Response from PHP
+        }
+    };
+    xhr.send(JSON.stringify(winSide));
+
+    location.href = "gameover.html"
+    
+    
+}
+
 //teller stillingen
 function score(side) {
     if (side < canvas.width/2) {
         score2 += 1
+        if (score2 >= 1 && score1+1 < score2) {
+            gameOver(score2, score1)
+        }
     } else {
         score1 += 1
+        if (score1 >= 1 && score2+1 < score1) {
+            gameOver(score1, score2)
+        }
     }
 }
 
