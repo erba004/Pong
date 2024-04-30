@@ -184,7 +184,11 @@ let leftInner = document.querySelector(".leftscore")
 let rightInner = document.querySelector(".rightscore")
 
 function gameOver(winSide, loseSide) {
-
+    // Combine winSide and loseSide into a single object
+    var data = {
+        winSide: winSide,
+        loseSide: loseSide
+    };
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'bruh.php', true);
@@ -194,13 +198,12 @@ function gameOver(winSide, loseSide) {
             console.log(xhr.responseText); // Response from PHP
         }
     };
-    xhr.send(JSON.stringify(winSide));
-    xhr.send(JSON.stringify(loseSide)) 
+    xhr.send(JSON.stringify(data));
 
-    location.href = "gameover.html"
-    
-    
+    // Redirect to gameover.html after sending the request
+    location.href = "gameover.html";
 }
+
 
 //teller stillingen
 function score(side) {
