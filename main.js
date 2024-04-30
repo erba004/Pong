@@ -186,7 +186,7 @@ let rightInner = document.querySelector(".rightscore")
 function gameOver(winSide, loseSide) {
 
 
-    var xhr = new XMLHttpRequest();
+/*     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'bruh.php', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function () {
@@ -195,7 +195,7 @@ function gameOver(winSide, loseSide) {
         }
     };
     xhr.send(JSON.stringify(winSide));
-    xhr.send(JSON.stringify(loseSide))
+    xhr.send(JSON.stringify(loseSide)) */
 
     location.href = "gameover.html"
     
