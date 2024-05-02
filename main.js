@@ -183,11 +183,11 @@ const keys =  {
 let leftInner = document.querySelector(".leftscore")
 let rightInner = document.querySelector(".rightscore")
 
-function gameOver(winSide, loseSide) {
-    // Combine winSide and loseSide into a single object
+function gameOver(leftSide, rightSide) {
+    // Combine leftSide and rightSide into a single object
     var data = {
-        winSide: winSide,
-        loseSide: loseSide
+        leftSide: leftSide,
+        rightSide: rightSide
     };
 
     var xhr = new XMLHttpRequest();
@@ -215,7 +215,7 @@ function score(side) {
     } else {
         score1 += 1
         if (score1 >= 1 && score2+1 < score1) {
-            gameOver(score1, score2)
+            gameOver(score2, score1)
         }
     }
 }
