@@ -1,5 +1,7 @@
 //setter margin til 0 og henter spillområdet fra HTML
-const pauseText = document.querySelector('div')
+const pauseText = document.querySelector('.pause')
+const startText = document.querySelector('.start')
+const gameOverText = document.querySelector('.gameover')
 
 document.body.style.margin = '0px'
 const canvas = document.querySelector('canvas')
@@ -209,7 +211,15 @@ function pause(pause) {
         pauseScreen.update()
         pauseText.style.display = 'unset'
         console.log("thingies")
+        
     }
+}
+
+function unPause() {
+    paused = false
+    pauseText.style.display = 'none'
+    animate()
+    console.log("smth idk")
 }
 
 function restart() {
@@ -220,17 +230,17 @@ function restart() {
 window.addEventListener(('keydown'), (event) => {
     switch (event.key) {
         case 'Escape':
-            paused = true
-            pause(true)
-            break
-        case 'Enter':
-            paused = false
-            pauseText.style.display = 'none'
-            animate()
-            console.log("smth idk")
+            if (paused == false) {
+                paused = true
+            } else {
+                unPause()
+            }
+            pause(paused)
             break
         case 'Backspace':
-            restart()
+            if (paused == true) {
+                restart()
+            }
             break
     }
 })

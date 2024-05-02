@@ -15,9 +15,7 @@ body {
     font-family: 'Minecraft';
 }
 div {
-    display: none;
     position: relative;
-    
 }
 h1 {
     position: absolute;
@@ -33,10 +31,15 @@ h2 {
 #esc {
     left: 470px;
 }
-#enter {
-    top: 400px;
-    left: 470px;
-}
 #backspace {
     left: 820px;
+}
+.gameover {
+    display: none;
+}
+.pause {
+    display: none;
+}
+.start {
+    display: none;
 }
