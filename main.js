@@ -1,14 +1,17 @@
 //setter margin til 0 og henter spillområdet fra HTML
+const pauseText = document.querySelector('div')
+
 document.body.style.margin = '0px'
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
 //setter størrelsen på spillfeltet
 canvas.width = 1440
-canvas.height = 787
+canvas.height = 756
 
 //definer mesteparten av variblene som blir brukt i løpet av hele koden
 
+let paused = false
 const increaseX = 1
 const increaseY = 0.5
 const behind = 25
@@ -19,6 +22,8 @@ let score1 = 0
 let score2 = 0
 const fromTop = 25
 const gap = 25
+const topGap = canvas.height/4
+const botGap = canvas.width/4
 const scoreCounterWidth = 100
 const scoreCounterHeight = 150
 const scorePositionLeft = canvas.width/3 + scoreCounterWidth/2
@@ -51,11 +56,11 @@ c.fillRect(0, 0, canvas.width, canvas.height)
 
 //lager en klasse for å gjøre det lettere å lage like spillere
 class Sprite {
-    constructor({position, velocity, color = 'white'}) {
+    constructor({position, velocity, color, width, height}) {
         this.position = position
         this.velocity = velocity
-        this. width = 30
-        this.height = 150
+        this.width = width
+        this.height = height
         this.color = color
     }
 
@@ -63,7 +68,6 @@ class Sprite {
     draw() {
         c.fillStyle = this.color
         c.fillRect(this.position.x, this.position.y, this.width, this.height)
-
     }
 
     //oppdaterer spillerne sin posisjon
@@ -134,7 +138,10 @@ const player1 = new Sprite({
         x: 0,
         y: 0
 
-    }
+    },
+    color: 'white',
+    width: 30,
+    height: 150
 
 })
 
@@ -148,7 +155,10 @@ const player2 = new Sprite({
         x: 0,
         y: 0
 
-    }
+    },
+    color: 'white',
+    width: 30,
+    height: 150
 
 })
 
@@ -162,6 +172,20 @@ const ball = new BallClass({
         x: baseSpeedX,
         y: baseSpeedY
     }
+})
+
+const pauseScreen = new Sprite({
+    position: {
+        x: botGap,
+        y: topGap
+    },
+    velocity: {
+        x: 0,
+        y: 0
+    },
+    color: '#1a1f26',
+    width: botGap*2,
+    height: topGap*2
 })
 
 // gjør at spillerne stopper å bevege seg når de slipper flytte knappen 
@@ -179,6 +203,37 @@ const keys =  {
         pressed: false
     }
 }
+
+function pause(pause) {
+    if (pause == true) {
+        pauseScreen.update()
+        pauseText.style.display = 'unset'
+        console.log("thingies")
+    }
+}
+
+function restart() {
+    location.reload()
+    
+}
+
+window.addEventListener(('keydown'), (event) => {
+    switch (event.key) {
+        case 'Escape':
+            paused = true
+            pause(true)
+            break
+        case 'Enter':
+            paused = false
+            pauseText.style.display = 'none'
+            animate()
+            console.log("smth idk")
+            break
+        case 'Backspace':
+            restart()
+            break
+    }
+})
 
 let leftInner = document.querySelector(".leftscore")
 let rightInner = document.querySelector(".rightscore")
@@ -209,12 +264,12 @@ function gameOver(leftSide, rightSide) {
 function score(side) {
     if (side < canvas.width/2) {
         score2 += 1
-        if (score2 >= 1 && score1+1 < score2) {
+        if (score2 >= 11 && score1+1 < score2) {
             gameOver(score2, score1)
         }
     } else {
         score1 += 1
-        if (score1 >= 1 && score2+1 < score1) {
+        if (score1 >= 11 && score2+1 < score1) {
             gameOver(score2, score1)
         }
     }
@@ -350,71 +405,75 @@ function hitPlayer(amountX) {
 
 //hoved loopen
 function animate() {
-    window.requestAnimationFrame(animate)
-    c.fillStyle = 'black'
-    c.fillRect(0, 0, canvas.width, canvas.height)
-    drawMiddle()
-    drawScore(score1, scorePositionLeft, scorePositionLeft2)
-    drawScore(score2, scorePositionRight, scorePositionRight2)
-    player1.update()
-    player2.update()
-    ball.update()
+    console.log("animate")
+    if(paused == false) {
+        window.requestAnimationFrame(animate)
+        c.fillStyle = 'black'
+        c.fillRect(0, 0, canvas.width, canvas.height)
+        drawMiddle()
+        drawScore(score1, scorePositionLeft, scorePositionLeft2)
+        drawScore(score2, scorePositionRight, scorePositionRight2)
+        player1.update()
+        player2.update()
+        ball.update()
 
-    //stopper spillerne sånn at de ikke fortsetter å flytte seg når de ikke trykker knappene
-    player1.velocity.y = 0
-    player2.velocity.y = 0
+        //stopper spillerne sånn at de ikke fortsetter å flytte seg når de ikke trykker knappene
+        player1.velocity.y = 0
+        player2.velocity.y = 0
 
-    //player1 bevegelse
-    if (keys.w.pressed && player1.lastkey === 'w') {
-        player1.velocity.y = -5
-    } else if (keys.s.pressed && player1.lastkey === 's') {
-        player1.velocity.y = 5
+        //player1 bevegelse
+        if (keys.w.pressed && player1.lastkey === 'w') {
+            player1.velocity.y = -5
+        } else if (keys.s.pressed && player1.lastkey === 's') {
+            player1.velocity.y = 5
+        }
+
+        //player2 bevegelse
+        if (keys.ArrowUp.pressed && player2.lastkey === 'ArrowUp') {
+            player2.velocity.y = -5
+        } else if (keys.ArrowDown.pressed && player2.lastkey === 'ArrowDown') {
+            player2.velocity.y = 5
+        }
+
+
+        //spiller 1 treff
+        if (
+            ball.position.x <= player1.position.x + player1.width &&
+            ball.position.y + ball.height >= player1.position.y &&
+            ball.position.y <= player1.position.y + player1.height &&
+            ball.position.x >= player1.position.x
+        ) {
+            hitPlayer(increaseX)
+        }
+
+        //spiller 2 treff
+        if (
+            ball.position.x + ball.width >= player2.position.x &&
+            ball.position.y + ball.height >= player2.position.y &&
+            ball.position.y <= player2.position.y + player2.height &&
+            ball.position.x + ball.width <= player2.position.x + player2.width
+        ) {
+            hitPlayer(-increaseX)
+            console.log(ball)
+        }
+
+        //spretter ballen hvis den treffer toppen eller bunnen
+        if (
+            ball.position.y <= 0 || ball.position.y + ball.height >= canvas.height
+        ) {
+            ball.velocity.y *= -1
+        }
+
+        //gir poeng hvis ballen går ut på en av sidene
+        if (
+            ball.position.x <= behind || ball.position.x + ball.width >= canvas.width - behind
+        ) {
+            score(ball.position.x)
+            reset()       
+        }
+    } else {
+        console.log("fail")
     }
-
-    //player2 bevegelse
-    if (keys.ArrowUp.pressed && player2.lastkey === 'ArrowUp') {
-        player2.velocity.y = -5
-    } else if (keys.ArrowDown.pressed && player2.lastkey === 'ArrowDown') {
-        player2.velocity.y = 5
-    }
-
-
-    //spiller 1 treff
-    if (
-        ball.position.x <= player1.position.x + player1.width &&
-        ball.position.y + ball.height >= player1.position.y &&
-        ball.position.y <= player1.position.y + player1.height &&
-        ball.position.x >= player1.position.x
-    ) {
-        hitPlayer(increaseX)
-    }
-
-    //spiller 2 treff
-    if (
-        ball.position.x + ball.width >= player2.position.x &&
-        ball.position.y + ball.height >= player2.position.y &&
-        ball.position.y <= player2.position.y + player2.height &&
-        ball.position.x + ball.width <= player2.position.x + player2.width
-    ) {
-        hitPlayer(-increaseX)
-        console.log(ball)
-    }
-
-    //spretter ballen hvis den treffer toppen eller bunnen
-    if (
-        ball.position.y <= 0 || ball.position.y + ball.height >= canvas.height
-    ) {
-        ball.velocity.y *= -1
-    }
-
-    //gir poeng hvis ballen går ut på en av sidene
-    if (
-        ball.position.x <= behind || ball.position.x + ball.width >= canvas.width - behind
-    ) {
-        score(ball.position.x)
-        reset()       
-    }
-
 }
 
 //kjører hoved loopen
