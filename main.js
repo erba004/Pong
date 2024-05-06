@@ -12,7 +12,7 @@ canvas.width = 1440
 canvas.height = 756
 
 //definer mesteparten av variblene som blir brukt i løpet av hele koden
-
+let gameStart = true
 let paused = false
 const increaseX = 1
 const increaseY = 0.5
@@ -207,17 +207,21 @@ const keys =  {
 }
 
 function pause(pause) {
-    if (pause == true) {
+    if (gameStart == true) {
+        pauseScreen.update()
+        startText.style.display = 'unset'
+    } else if (pause == true) {
         pauseScreen.update()
         pauseText.style.display = 'unset'
         console.log("thingies")
-        
     }
 }
 
 function unPause() {
     paused = false
+    gameStart = false
     pauseText.style.display = 'none'
+    startText.style.display = 'none'
     animate()
     console.log("smth idk")
 }
@@ -416,7 +420,9 @@ function hitPlayer(amountX) {
 //hoved loopen
 function animate() {
     console.log("animate")
-    if(paused == false) {
+    if(gameStart == true) {
+        pause(paused)
+    } else if(paused == false) {
         window.requestAnimationFrame(animate)
         c.fillStyle = 'black'
         c.fillRect(0, 0, canvas.width, canvas.height)

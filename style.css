@@ -18,10 +18,11 @@ div {
     position: relative;
 }
 h1 {
-    position: absolute;
+    justify-content: space-evenly;
+    position: fixed;
     color: white;
     left: 670px;
-    top: 225px;
+    top: 215px;
 }
 h2 {
     position: absolute;
@@ -42,4 +43,11 @@ h2 {
 }
 .start {
     display: none;
+}
+#glhf {
+    left: 670px;
+    top: 500px;
+}
+#wlc {
+    left: 550px;
 }
