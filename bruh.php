@@ -1,9 +1,9 @@
 <?php
     // Database connection parameters
-    $servername = "172.20.128.78";
+    $servername = "172.20.128.23";
     $username = "root";
-    $password = "12345";
-    $database = "bruh";
+    $password = "Skole123";
+    $database = "Pong";
 
     // Create connection
     $conn = new mysqli($servername, $username, $password, $database);
@@ -32,18 +32,28 @@
 
         // Process the data as needed
         // For example, you can perform database operations, calculations, etc.
-
-        // Send a response if necessary
-        echo "Received data: winSide = $leftSide, loseSide = $rightSide";
     }
+
+    
 
     // Sample data to insert
     $name = "John Doe";
     $leftScore = $leftSide;
     $rightScore = $rightSide;
+    $winner = "";
+
+    if ($leftScore > $rightScore) {
+        $winner = "Left";
+    } elseif ($rightScore > $leftScore) {
+        $winner = "Right";
+    } else {
+        $winner = "Tie";
+    }
+
+    
 
     // Prepare SQL statement
-    $sql = "INSERT INTO score (Username, LeftScore, RightScore) VALUES ($name, $leftScore, $rightScore)";
+    $sql = "INSERT INTO score (leftScore, rightScore, winner, name) VALUES ($leftScore, $rightScore, $winner, $name)";
 
     // Create a prepared statement
     $stmt = $conn->prepare($sql);
