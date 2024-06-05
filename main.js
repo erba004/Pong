@@ -12,9 +12,9 @@ canvas.width = 1440
 canvas.height = 756
 
 //definer mesteparten av variblene som blir brukt i løpet av hele koden
-//DO NOT TOUCH
+//************************************ DO NOT TOUCH ********************************************
 let tempStart = 1
-//DO NOT TOUCH
+//************************************ DO NOT TOUCH ********************************************
 let gameStart = true
 let paused = false
 const increaseX = 1
@@ -255,6 +255,8 @@ window.addEventListener(('keydown'), (event) => {
 let leftInner = document.querySelector(".leftscore")
 let rightInner = document.querySelector(".rightscore")
 
+//************************************ DO NOT TOUCH ********************************************
+
 function gameOver(leftSide, rightSide) {
     // Combine leftSide and rightSide into a single object
     let data = {
@@ -276,6 +278,7 @@ function gameOver(leftSide, rightSide) {
     location.href = "gameover.html";
 }
 
+//************************************ DO NOT TOUCH ********************************************
 
 //teller stillingen
 function score(side) {
