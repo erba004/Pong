@@ -59,7 +59,7 @@
     $stmt = $conn->prepare($sql);
 
     // Bind parameters
-    $stmt->bind_param("ssi", $name, $leftScore, $rightScore);
+    $stmt->bind_param("ssi", $leftScore, $rightScore, $winner, $name);
 
     // Execute the statement
     if ($stmt->execute()) {

@@ -275,7 +275,7 @@ function gameOver(leftSide, rightSide) {
     xhr.send(JSON.stringify(data));
 
     // Redirect to gameover.html after sending the request
-    location.href = "gameover.html";
+    paused = true
 }
 
 //************************************ DO NOT TOUCH ********************************************
@@ -284,12 +284,12 @@ function gameOver(leftSide, rightSide) {
 function score(side) {
     if (side < canvas.width/2) {
         score2 += 1
-        if (score2 >= 11 && score1+1 < score2) {
+        if (score2 >= 1 && score1+1 < score2) {
             gameOver(score2, score1)
         }
     } else {
         score1 += 1
-        if (score1 >= 11 && score2+1 < score1) {
+        if (score1 >= 1 && score2+1 < score1) {
             gameOver(score2, score1)
         }
     }
