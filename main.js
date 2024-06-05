@@ -12,7 +12,9 @@ canvas.width = 1440
 canvas.height = 756
 
 //definer mesteparten av variblene som blir brukt i løpet av hele koden
+//DO NOT TOUCH
 let tempStart = 1
+//DO NOT TOUCH
 let gameStart = true
 let paused = false
 const increaseX = 1
@@ -422,6 +424,7 @@ function hitPlayer(amountX) {
 function animate() {
     console.log("animate")
     if(gameStart == true && tempStart == 0) {
+        paused = true
         pause(paused)
     } else if(paused == false) {
         tempStart = 0
@@ -515,6 +518,9 @@ window.addEventListener(('keydown'), (event) => {
         case 'ArrowDown':
             keys.ArrowDown.pressed = true
             player2.lastkey = 'ArrowDown'
+            break
+        case 'Escape':
+            console.log("escape was pressed")
             break
     }
 })
