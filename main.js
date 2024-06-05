@@ -274,7 +274,7 @@ function gameOver(leftSide, rightSide) {
     };
     xhr.send(JSON.stringify(data));
 
-    paused = true
+    pause(true)
 }
 
 //************************************ DO NOT TOUCH ********************************************
