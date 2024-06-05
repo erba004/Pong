@@ -7,12 +7,13 @@ $dbname = "Pong";
 
 // Error handling function
 function handleError($message) {
+    error_log($message);
     echo json_encode(['error' => $message]);
     exit;
 }
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = @new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
