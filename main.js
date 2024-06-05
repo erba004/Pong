@@ -12,7 +12,7 @@ canvas.width = 1440
 canvas.height = 756
 
 //definer mesteparten av variblene som blir brukt i løpet av hele koden
-let gameStart = true
+let gameStart = false
 let paused = false
 const increaseX = 1
 const increaseY = 0.5
@@ -254,12 +254,12 @@ let rightInner = document.querySelector(".rightscore")
 
 function gameOver(leftSide, rightSide) {
     // Combine leftSide and rightSide into a single object
-    var data = {
+    let data = {
         leftSide: leftSide,
         rightSide: rightSide
     };
 
-    var xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
     xhr.open('POST', 'bruh.php', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function () {

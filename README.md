@@ -1,4 +1,4 @@
-# Prosjektoppgave_uke41-43
+# Pong
 
 # SPØRSMÅL
 # hva tenker du om fargene?
