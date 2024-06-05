@@ -548,7 +548,8 @@ window.addEventListener(('keydown'), (event) => {
                     }
                 }
             };
-            xhr.send(JSON.stringify(data));            
+            xhr.send(JSON.stringify(data));    
+            console.log("heihei")        
             break
     }
 })
