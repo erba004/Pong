@@ -274,8 +274,8 @@ function gameOver(leftSide, rightSide) {
     };
     xhr.send(JSON.stringify(data));
 
-    console.log("test game over")
-    paused = true
+    // Redirect to gameover.html after sending the request
+        location.href = "gameover.html";
 }
 
 //************************************ DO NOT TOUCH ********************************************
