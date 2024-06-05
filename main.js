@@ -273,8 +273,9 @@ function gameOver(leftSide, rightSide) {
         }
     };
     xhr.send(JSON.stringify(data));
-
-    pause(true)
+    
+    paused = true
+    pause(paused)
 }
 
 //************************************ DO NOT TOUCH ********************************************
