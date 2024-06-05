@@ -22,6 +22,8 @@ if ($conn->connect_error) {
 
 // Get the JSON data sent by the JavaScript
 $data = json_decode(file_get_contents('php://input'), true);
+print_r($data);
+echo $data["operacion"];
 
 // Check if data is received
 if ($data === null) {
