@@ -3,6 +3,15 @@ const pauseText = document.querySelector('.pause')
 const startText = document.querySelector('.start')
 const gameOverText = document.querySelector('.gameover')
 
+document.addEventListener("DOMContentLoaded", function() {
+    fetch('bruh.php')
+        .then(response => response.json())
+        .then(test => {
+            console.log('Data from PHP:', test);
+        })
+        .catch(error => console.error('Error:', error));
+});
+
 document.body.style.margin = '0px'
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
