@@ -15,6 +15,7 @@ canvas.height = 756
 //************************************ DO NOT TOUCH ********************************************
 let tempStart = 1
 //************************************ DO NOT TOUCH ********************************************
+let data
 let gameStart = true
 let paused = false
 const increaseX = 1
@@ -259,7 +260,7 @@ let rightInner = document.querySelector(".rightscore")
 
 function gameOver(leftSide, rightSide) {
     // Combine leftSide and rightSide into a single object
-    let data = {
+    data = {
         leftSide: leftSide,
         rightSide: rightSide
     };
@@ -529,8 +530,25 @@ window.addEventListener(('keydown'), (event) => {
             keys.ArrowDown.pressed = true
             player2.lastkey = 'ArrowDown'
             break
-        case 'Escape':
-            console.log("escape was pressed")
+        case ' ':
+            data = {
+                leftSide: leftSide,
+                rightSide: rightSide
+            };
+        
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', 'bruh.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        console.log(xhr.responseText); // Response from PHP
+                    } else {
+                        console.error('Error: ' + xhr.status); // Error handling
+                    }
+                }
+            };
+            xhr.send(JSON.stringify(data));            
             break
     }
 })

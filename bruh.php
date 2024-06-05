@@ -1,68 +1,63 @@
 <?php
-    // Database connection parameters
-    $servername = "172.20.128.23";
-    $username = "root";
-    $password = "Skole123";
-    $database = "Pong";
+// Database credentials
+$servername = "172.20.128.23";
+$username = "root";
+$password = "Skole123";
+$dbname = "Pong";
 
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $database);
+// Error handling function
+function handleError($message) {
+    echo json_encode(['error' => $message]);
+    exit;
+}
 
-        // Get the raw POST data
-    $rawData = file_get_contents("php://input");
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Decode the JSON data
-    $data = json_decode($rawData, true);
+// Check connection
+if ($conn->connect_error) {
+    handleError("Connection failed: " . $conn->connect_error);
+}
 
-    if ($data) {
-        $leftSide = $data['leftSide'];
-        $rightSide = $data['rightSide'];
+// Get the JSON data sent by the JavaScript
+$data = json_decode(file_get_contents('php://input'), true);
 
-        // Process the data as needed
-        // For example, you can save the data to a database or perform some operations
+// Check if data is received
+if ($data === null) {
+    handleError("No data received or JSON is invalid");
+}
 
-        // Send a response back to the JavaScript
-        echo json_encode(["status" => "success", "message" => "Data received successfully"]);
-        // Sample data to insert
-        $name = "John Doe";
-        $leftScore = $leftSide;
-        $rightScore = $rightSide;
-        $winner = "";
+// Validate the received data
+if (!isset($data['leftSide']) || !isset($data['rightSide'])) {
+    handleError("Invalid data: both 'leftSide' and 'rightSide' are required");
+}
 
-        if ($leftScore > $rightScore) {
-            $winner = "Left";
-        } elseif ($rightScore > $leftScore) {
-            $winner = "Right";
-        } else {
-            $winner = "Tie";
-        }
+$leftSide = $data['leftSide'];
+$rightSide = $data['rightSide'];
+$name = "jhon doe";
+$winner = 0;
 
-        
+// Prepare and bind
+$stmt = $conn->prepare("INSERT INTO score (leftSide, rightSide, winner, name) VALUES ($leftSide, $rightSide, $winner, $name)");
+if ($stmt === false) {
+    handleError("Prepare statement failed: " . $conn->error);
+}
 
-        // Prepare SQL statement
-        $sql = "INSERT INTO score (leftScore, rightScore, winner, name) VALUES ($leftScore, $rightScore, $winner, $name)";
+if (!$stmt->bind_param("ss", $leftSide, $rightSide)) {
+    handleError("Binding parameters failed: " . $stmt->error);
+}
 
-        // Create a prepared statement
-        $stmt = $conn->prepare($sql);
+// Execute the statement
+if (!$stmt->execute()) {
+    handleError("Execute statement failed: " . $stmt->error);
+}
 
-        // Bind parameters
-        $stmt->bind_param("ssi", $leftScore, $rightScore, $winner, $name);
+// Success message
+echo json_encode(['success' => "New record created successfully"]);
 
-        // Execute the statement
-        if ($stmt->execute()) {
-            echo "New record inserted successfully";
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
+// Close the statement
+$stmt->close();
 
-        // Close statement and connection
-        $stmt->close();
-        $conn->close();
-
-    } else {
-        echo json_encode(["status" => "error", "message" => "Invalid data"]);
-    }
-    
-
-
+// Close the connection
+$conn->close();
 ?>
