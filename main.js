@@ -274,7 +274,8 @@ function gameOver(leftSide, rightSide) {
     };
     xhr.send(JSON.stringify(data));
 
-    pause(true)
+    console.log("test game over")
+    paused = true
 }
 
 //************************************ DO NOT TOUCH ********************************************
