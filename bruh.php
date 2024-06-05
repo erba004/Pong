@@ -1,6 +1,6 @@
 <?php
 // Database credentials
-$servername = "172.20.128.23";
+$servername = "localhost";
 $username = "root";
 $password = "Skole123";
 $dbname = "Pong";
