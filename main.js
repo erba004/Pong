@@ -532,8 +532,8 @@ window.addEventListener(('keydown'), (event) => {
             break
         case ' ':
             data = {
-                leftSide: leftSide,
-                rightSide: rightSide
+                leftSide: score1,
+                rightSide: score2
             };
         
             let xhr = new XMLHttpRequest();
