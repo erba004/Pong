@@ -12,7 +12,8 @@ canvas.width = 1440
 canvas.height = 756
 
 //definer mesteparten av variblene som blir brukt i løpet av hele koden
-let gameStart = false
+let tempStart = 1
+let gameStart = true
 let paused = false
 const increaseX = 1
 const increaseY = 0.5
@@ -420,9 +421,10 @@ function hitPlayer(amountX) {
 //hoved loopen
 function animate() {
     console.log("animate")
-    if(gameStart == true) {
+    if(gameStart == true && tempStart == 0) {
         pause(paused)
     } else if(paused == false) {
+        tempStart = 0
         window.requestAnimationFrame(animate)
         c.fillStyle = 'black'
         c.fillRect(0, 0, canvas.width, canvas.height)
