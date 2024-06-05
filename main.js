@@ -282,6 +282,7 @@ function gameOver(leftSide, rightSide) {
 
 //teller stillingen
 function score(side) {
+    console.log("score test")
     if (side < canvas.width/2) {
         score2 += 1
         if (score2 >= 1 && score1+1 < score2) {
