@@ -5,6 +5,27 @@
     $password = "Skole123";
     $database = "Pong";
 
+
+        // Get the raw POST data
+    $rawData = file_get_contents("php://input");
+
+    // Decode the JSON data
+    $data = json_decode($rawData, true);
+
+    if ($data) {
+        $leftSide = $data['leftSide'];
+        $rightSide = $data['rightSide'];
+
+        // Process the data as needed
+        // For example, you can save the data to a database or perform some operations
+
+        // Send a response back to the JavaScript
+        echo json_encode(["status" => "success", "message" => "Data received successfully"]);
+    } else {
+        echo json_encode(["status" => "error", "message" => "Invalid data"]);
+    }
+
+    
     // Create connection
     $conn = new mysqli($servername, $username, $password, $database);
 

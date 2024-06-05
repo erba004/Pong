@@ -266,13 +266,19 @@ function gameOver(leftSide, rightSide) {
 
     let xhr = new XMLHttpRequest();
     xhr.open('POST', 'bruh.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log(xhr.responseText); // Response from PHP
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                console.log(xhr.responseText); // Response from PHP
+            } else {
+                console.error('Error: ' + xhr.status); // Error handling
+            }
         }
     };
     xhr.send(JSON.stringify(data));
+
+
     
     paused = true
     pause(paused)
