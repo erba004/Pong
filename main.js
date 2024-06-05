@@ -11,6 +11,9 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .catch(error => console.error('Error:', error));
 });
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("loaded")
+});
 
 document.body.style.margin = '0px'
 const canvas = document.querySelector('canvas')
