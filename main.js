@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(data => {
             console.log('Data from PHP:', data);
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => console.error('Errorddddddd:', error));
 });
 console.log("loaded")
 
