@@ -25,7 +25,6 @@ $winner = true;
 $stmt = $conn->prepare("INSERT INTO score (leftScore, rightScore, winner, name) VALUES (?, ?, ?, ?)");
 $stmt->bind_param("siib", $leftScore, $rightScore, $winner, $name);
 
-$stmt->execute();
 
 // Execute the statement
 if ($stmt->execute()) {
