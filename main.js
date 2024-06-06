@@ -571,6 +571,7 @@ window.addEventListener(('keydown'), (event) => {
             console.log("heihei")        
             break
         case 'k':
+            console.log("test score")
             score1++
             break
     }

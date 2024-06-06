@@ -1,0 +1,3 @@
+<?php
+
+echoh("helo world");
