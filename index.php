@@ -23,7 +23,7 @@ $winner = true;
 
 // Prepare and bind
 $stmt = $conn->prepare("INSERT INTO score (leftScore, rightScore, winner, name) VALUES (?, ?, ?, ?)");
-$stmt->bind_param("siib", $leftScore, $rightScore, $winner, $name);
+$stmt->bind_param("iibs", $leftScore, $rightScore, $winner, $name);
 
 
 // Execute the statement

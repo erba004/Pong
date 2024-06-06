@@ -1,24 +1,6 @@
 <?php
 
 
-// Turn on output buffering
-ob_start();
-
-// Set the Content-Type to application/json
-header('Content-Type: application/json');
-
-// Create an associative array with sample data
-$test = [
-    'name' => 'John Doe',
-    'email' => 'john.doe@example.com'
-];
-
-// Output the JSON-encoded data
-echo json_encode($test);
-
-// Flush the output buffer and turn off output buffering
-ob_end_flush();
-
 
 // Database credentials
 $servername = "localhost";

@@ -3,21 +3,6 @@ const pauseText = document.querySelector('.pause')
 const startText = document.querySelector('.start')
 const gameOverText = document.querySelector('.gameover')
 
-document.addEventListener("DOMContentLoaded", function() {
-    fetch('bruh.php')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            return response.json();
-        })
-        .then(test => {
-            console.log('Data from PHP:', test);
-        })
-        .catch(error => console.error('Error:', error));
-});
-console.log("loaded")
-
 //************** */
 
 
