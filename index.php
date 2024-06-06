@@ -2,7 +2,7 @@
 
 echo("helo world");
 
-$servername = "172.20.128.23";  //MySQL server name
+$servername = "localhost";  //MySQL server name
 $username = "root";         //MySQL username
 $password = "Skole123";     //MySQL password
 $dbname = "Pong";           //MySQL database name
