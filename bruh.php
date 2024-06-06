@@ -1,8 +1,11 @@
 <?php
 
 
+// Turn on output buffering
+ob_start();
 
-header('Content-Type: application/json'); // Ensure the output is JSON
+// Set the Content-Type to application/json
+header('Content-Type: application/json');
 
 // Create an associative array with sample data
 $test = [
@@ -13,7 +16,8 @@ $test = [
 // Output the JSON-encoded data
 echo json_encode($test);
 
-
+// Flush the output buffer and turn off output buffering
+ob_end_flush();
 
 
 // Database credentials
