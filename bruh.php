@@ -5,13 +5,13 @@
 header('Content-Type: application/json'); // Ensure the output is JSON
 
 // Create an associative array with sample data
-$data = [
+$test = [
     'name' => 'John Doe',
     'email' => 'john.doe@example.com'
 ];
 
 // Output the JSON-encoded data
-echo json_encode($data);
+echo json_encode($test);
 
 
 
