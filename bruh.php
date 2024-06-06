@@ -41,23 +41,18 @@ if (!isset($data['leftSide']) || !isset($data['rightSide'])) {
 $leftSide = $data['leftSide'];
 $rightSide = $data['rightSide'];
 $name = "jhon doe";
-$winner = 0;
+$winner = false;
 
 // Prepare and bind
 $stmt = $conn->prepare("INSERT INTO score (leftSide, rightSide, winner, name) VALUES ($leftSide, $rightSide, $winner, $name)");
-if ($stmt === false) {
-    handleError("Prepare statement failed: " . $conn->error);
-}
-
-if (!$stmt->bind_param("sibi", $leftSide, $rightSide, $winner, $name)) {
-    handleError("Binding parameters failed: " . $stmt->error);
-}
+$stmt->bind_param("iibs", $leftSide, $rightSide, $winner, $name);
 
 // Execute the statement
-if (!$stmt->execute()) {
-    handleError("Execute statement failed: " . $stmt->error);
+if ($stmt->execute()) {
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $stmt->error;
 }
-
 // Success message
 echo json_encode(['success' => "New record created successfully"]);
 
