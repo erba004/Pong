@@ -2,54 +2,37 @@
 
 echo("helo world");
 
-
-
-// Database credentials
-$servername = "localhost";
-$username = "root";
-$password = "Skole123";
-$dbname = "Pong";
-
-// Error handling function
-function handleError($message) {
-    error_log($message);
-    echo json_encode(['error' => $message]);
-    exit;
-}
+$servername = "localhost";  //MySQL server name
+$username = "root";         //MySQL username
+$password = "Skole123";     //MySQL password
+$dbname = "Pong";           //MySQL database name
 
 // Create connection
-$conn = @new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
-    handleError("Connection failed: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);
 }
 
-$leftSide = $data['leftSide'];
-$rightSide = $data['rightSide'];
-$name = "jhon doe";
-$winner = 0;
+// Data to be inserted
+$name = "John Doe";
+$leftScore = 2;
+$rightScore = 3;
+$winner = true;
 
 // Prepare and bind
-$stmt = $conn->prepare("INSERT INTO score (leftSide, rightSide, winner, name) VALUES ($leftSide, $rightSide, $winner, $name)");
-if ($stmt === false) {
-    handleError("Prepare statement failed: " . $conn->error);
-}
-
-if (!$stmt->bind_param("ss", $leftSide, $rightSide)) {
-    handleError("Binding parameters failed: " . $stmt->error);
-}
+$stmt = $conn->prepare("INSERT INTO score (leftScore, rightScore, winner, name) VALUES ($leftScore, $rightScore, $winner, $name)");
+$stmt->bind_param("ss", $name, $email);
 
 // Execute the statement
-if (!$stmt->execute()) {
-    handleError("Execute statement failed: " . $stmt->error);
+if ($stmt->execute()) {
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $stmt->error;
 }
 
-// Success message
-echo json_encode(['success' => "New record created successfully"]);
-
-// Close the statement
+// Close statement and connection
 $stmt->close();
-
-// Close the connection
 $conn->close();
+?>
