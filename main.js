@@ -4,10 +4,15 @@ const startText = document.querySelector('.start')
 const gameOverText = document.querySelector('.gameover')
 
 document.addEventListener("DOMContentLoaded", function() {
-    fetch('bruh.php')
-        .then(response => response.json())
-        .then(test => {
-            console.log('Data from PHP:', test);
+    fetch('data.php')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Data from PHP:', data);
         })
         .catch(error => console.error('Error:', error));
 });
@@ -558,6 +563,7 @@ window.addEventListener(('keydown'), (event) => {
                         console.log(xhr.responseText); // Response from PHP
                     } else {
                         console.error('Error: ' + xhr.status); // Error handling
+                        console.error(error)
                     }
                 }
             };
