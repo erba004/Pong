@@ -267,7 +267,7 @@ function gameOver(leftSide, rightSide) {
         leftSide: leftSide,
         rightSide: rightSide
     };
-
+    console.log(data)
     let xhr = new XMLHttpRequest();
     xhr.open('POST', 'bruh.php', true);
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
