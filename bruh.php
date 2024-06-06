@@ -2,10 +2,17 @@
 
 
 
-$test = [
-    "testtest"
+header('Content-Type: application/json'); // Ensure the output is JSON
+
+// Create an associative array with sample data
+$data = [
+    'name' => 'John Doe',
+    'email' => 'john.doe@example.com'
 ];
-echo json_encode($test);
+
+// Output the JSON-encoded data
+echo json_encode($data);
+
 
 
 

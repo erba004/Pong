@@ -15,14 +15,6 @@ console.log("loaded")
 
 //************** */
 
-fetch('bruh.php')
-    .then(response => response.json())
-    .then(test => {
-        console.log('Data from PHP:', test);
-    })
-    .catch(error => console.error('Error:', error));
-
-//************** */
 
 document.body.style.margin = '0px'
 const canvas = document.querySelector('canvas')
