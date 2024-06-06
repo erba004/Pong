@@ -1,3 +1,3 @@
 <?php
 
-echoh("helo world");
+echo("helo world");
