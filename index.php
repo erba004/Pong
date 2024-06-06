@@ -13,7 +13,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
-} else  echo("<br>"+"connected");
+} else  echo("connected");
 
 // Data to be inserted
 $name = "John Doe";
