@@ -67,7 +67,7 @@ if ($stmt === false) {
     handleError("Prepare statement failed: " . $conn->error);
 }
 
-if (!$stmt->bind_param("siib", $leftSide, $rightSide, $winner, $name)) {
+if (!$stmt->bind_param("sibi", $leftSide, $rightSide, $winner, $name)) {
     handleError("Binding parameters failed: " . $stmt->error);
 }
 
