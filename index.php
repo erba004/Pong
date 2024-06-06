@@ -25,6 +25,8 @@ $winner = true;
 $stmt = $conn->prepare("INSERT INTO score (leftScore, rightScore, winner, name) VALUES ($leftScore, $rightScore, $winner, $name)");
 $stmt->bind_param("ss", $name, $email);
 
+$stmt->execute();
+
 // Execute the statement
 if ($stmt->execute()) {
     echo "New record created successfully";
