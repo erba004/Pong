@@ -534,24 +534,7 @@ window.addEventListener(('keydown'), (event) => {
             player2.lastkey = 'ArrowDown'
             break
         case ' ':
-            data = {
-                leftSide: score1,
-                rightSide: score2
-            };
-        
-            let xhr = new XMLHttpRequest();
-            xhr.open('POST', 'bruh.php', true);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        console.log(xhr.responseText); // Response from PHP
-                    } else {
-                        console.error('Error: ' + xhr.status); // Error handling
-                    }
-                }
-            };
-            xhr.send(JSON.stringify(data));    
-            console.log("heihei")        
+            gameOver(5, 9)
             break
         case 'k':
             console.log("test score")
