@@ -541,14 +541,12 @@ window.addEventListener(('keydown'), (event) => {
         
             let xhr = new XMLHttpRequest();
             xhr.open('POST', 'bruh.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
                         console.log(xhr.responseText); // Response from PHP
                     } else {
                         console.error('Error: ' + xhr.status); // Error handling
-                        console.error(error)
                     }
                 }
             };
