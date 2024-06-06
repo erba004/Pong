@@ -310,12 +310,12 @@ function score(side) {
     console.log("score test")
     if (side < canvas.width/2) {
         score2 += 1
-        if (score2 >= 1 && score1+1 < score2) {
+        if (score2 >= 11 && score1+1 < score2) {
             gameOver(score2, score1)
         }
     } else {
         score1 += 1
-        if (score1 >= 1 && score2+1 < score1) {
+        if (score1 >= 11 && score2+1 < score1) {
             gameOver(score2, score1)
         }
     }
