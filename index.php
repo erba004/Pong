@@ -13,7 +13,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
-} else  echo("it worked maybe");
+} else  echo("<br>"+"connected");
 
 // Data to be inserted
 $name = "John Doe";
@@ -22,8 +22,8 @@ $rightScore = 3;
 $winner = true;
 
 // Prepare and bind
-$stmt = $conn->prepare("INSERT INTO score (leftScore, rightScore, winner, name) VALUES ($leftScore, $rightScore, $winner, $name)");
-$stmt->bind_param("ss", $name, $email);
+$stmt = $conn->prepare("INSERT INTO score (leftScore, rightScore, winner, name) VALUES (?, ?, ?, ?)");
+$stmt->bind_param("ss", $leftScore, $rightScore, $winner, $name);
 
 $stmt->execute();
 
