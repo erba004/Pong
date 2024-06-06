@@ -8,35 +8,12 @@ $username = "root";
 $password = "Skole123";
 $dbname = "Pong";
 
-// Error handling function
-function handleError($message) {
-    error_log($message);
-    echo json_encode(['error' => $message]);
-    exit;
-}
-
 // Create connection
 $conn = @new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
-if ($conn->connect_error) {
-    handleError("Connection failed: " . $conn->connect_error);
-}
-
 // Get the JSON data sent by the JavaScript
 $data = json_decode(file_get_contents('php://input'), true);
-// print_r($data);
-// echo $data["operacion"];
 
-// Check if data is received
-if ($data === null) {
-    handleError("No data received or JSON is invalid");
-}
-
-// Validate the received data
-if (!isset($data['leftSide']) || !isset($data['rightSide'])) {
-    handleError("Invalid data: both 'leftSide' and 'rightSide' are required");
-}
 
 $leftSide = $data['leftSide'];
 $rightSide = $data['rightSide'];
@@ -45,7 +22,7 @@ $winner = false;
 
 // Prepare and bind
 $stmt = $conn->prepare("INSERT INTO score (leftSide, rightSide, winner, name) VALUES ($leftSide, $rightSide, $winner, $name)");
-$stmt->bind_param("iibs", $leftSide, $rightSide, $winner, $name);
+$stmt->bind_param("ssbs", $leftSide, $rightSide, $winner, $name);
 
 // Execute the statement
 if ($stmt->execute()) {
